@@ -6,10 +6,10 @@
 # content-type: application/json
 
 # {
-#     "merchant": "test-merchant",
-#     "transaction_type": "expense",
-#     "amount": 7.75,
-#     "transaction_date": "2022-07-27"
+#     "merchant": "test payroll",
+#     "transaction_type": "income",
+#     "amount": 152.83,
+#     "transaction_date": "2022-07-30"
 # }
 
 # DELETE a transaction

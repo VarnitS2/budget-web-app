@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import TopBar from "../components/topBar";
 import HomeSideBar from "../components/homeSideBar";
 import "../styles/homeStyles.scss";
@@ -31,10 +33,48 @@ const styledButtons = makeStyles({
     marginRight: "6px",
     minWidth: "1px",
   },
+
+  sort: {
+    textTransform: "none",
+    fontSize: "12px",
+    fontWeight: "bold",
+    color: "white",
+    borderColor: "gray",
+    borderRadius: "25px",
+    marginRight: "6px",
+    minWidth: "1px",
+  },
 });
 
 function HomeView() {
   const classes = styledButtons();
+  const [transactions, setTransactions] = useState<any[]>([]);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    getAllTransactions();
+  }, []);
+
+  const getAllTransactions = () => {
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+
+    fetch("/transactions/getall", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          setTransactions(data.message);
+        } else {
+          setIsError(true);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsError(true);
+      });
+  };
 
   return (
     <div className="home__background">
@@ -78,11 +118,62 @@ function HomeView() {
         <HomeSideBar />
 
         <div className="home__body__main">
-            <div className="home__body__main__header">
-                <div className="home__body__main__header-title">
-                    Transactions
-                </div>
+          <div className="home__body__main__header">
+            <div className="home__body__main__header_title">Transactions</div>
+
+            <div>
+              <Button disableRipple className={classes.sort} variant="outlined">
+                Sort
+              </Button>
             </div>
+          </div>
+
+          <ul className="home__body__main__transactions__list">
+            {transactions.map((item) => (
+              <div className="home__body__main__transactions__item-container-background">
+                <li
+                  className={
+                    item.transaction_type === "income"
+                      ? "home__body__main__transactions__item-container--income"
+                      : "home__body__main__transactions__item-container--expense"
+                  }
+                  key={item.id}
+                >
+                  <div className="home__body__main__transactions__item__id-container">
+                    <div className="home__body__main__transactions__item__id">
+                      {item.id}
+                    </div>
+
+                    <div>
+                      {new Date(item.transaction_date)
+                        .toDateString()
+                        .split(" ")
+                        .slice(1, -1)
+                        .join(" ")}
+                    </div>
+                  </div>
+
+                  <div className="home__body__main__transactions__merchant">
+                    {item.merchant}
+                  </div>
+
+                  <div className="home__body__main__transactions__item__type-container">
+                    <div>
+                      {item.transaction_type === "income" ? (
+                        <ArrowDropUpIcon className="home__body__main__transactions__item__type" />
+                      ) : (
+                        <ArrowDropDownIcon className="home__body__main__transactions__item__type" />
+                      )}
+                    </div>
+
+                    <div className="home__body__main__transactions__amount">
+                      ${item.amount}
+                    </div>
+                  </div>
+                </li>
+              </div>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

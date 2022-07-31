@@ -31,7 +31,7 @@ function HomeSideBar() {
         <div className="home-side-bar">
             <div className="home-side-bar__tab-container">
                 <Button disableRipple className={classes.selected} variant="outlined">
-                    This week
+                    All
                 </Button>
 
                 <Button disableRipple className={classes.root} variant="outlined">

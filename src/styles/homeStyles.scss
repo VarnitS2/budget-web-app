@@ -37,7 +37,6 @@
 }
 
 .home__body {
-  width: 100%;
   flex-grow: 1;
   display: flex;
 }
@@ -49,7 +48,6 @@
 }
 
 .home__body__main__header {
-  width: 100%;
   height: 120px;
   display: flex;
   justify-content: space-between;
@@ -58,7 +56,79 @@
   padding-right: 40px;
 }
 
-.home__body__main__header-title {
-    font-size: 36px;
-    font-weight: 525;
-  }
+.home__body__main__header_title {
+  font-size: 36px;
+  font-weight: 525;
+}
+
+.home__body__main__transactions__list {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  font-weight: 400;
+  padding-inline-start: 0px;
+}
+
+.home__body__main__transactions__item-container--income {
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #02a267;
+}
+
+.home__body__main__transactions__item-container-background {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.home__body__main__transactions__item-container-background:hover {
+  border-radius: 5px;
+  background-color: #3d3d3f;
+  box-shadow: 0px 0px 5px 1px #3d3d3f;
+}
+
+.home__body__main__transactions__item-container--expense {
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #e5607d;
+}
+
+.home__body__main__transactions__item__id-container {
+  width: 150px;
+  display: flex;
+}
+
+.home__body__main__transactions__item__id {
+  color: gray;
+  padding-right: 75px;
+}
+
+.home__body__main__transactions__merchant {
+  flex: 1;
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 15px;
+}
+
+.home__body__main__transactions__item__type-container {
+  width: 175px;
+  display: flex;
+}
+
+.home__body__main__transactions__item__type {
+  transform: scale(2);
+  margin-right: 25px;
+}
+
+.home__body__main__transactions__amount {
+  width: 125px;
+  text-align: end;
+}
