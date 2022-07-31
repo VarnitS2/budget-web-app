@@ -1,0 +1,21 @@
+# GET all transactions
+# GET http://127.0.0.1:5000/transactions/getall
+
+# POST a new transaction
+# POST http://127.0.0.1:5000/transactions/add HTTP/1.1
+# content-type: application/json
+
+# {
+#     "merchant": "test-merchant",
+#     "transaction_type": "expense",
+#     "amount": 7.75,
+#     "transaction_date": "2022-07-27"
+# }
+
+# DELETE a transaction
+# POST http://127.0.0.1:5000/transactions/delete HTTP/1.1
+# content-type: application/json
+
+# {
+#     "id": 3
+# }
