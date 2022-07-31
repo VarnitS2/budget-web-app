@@ -3,6 +3,7 @@ import { Button, makeStyles } from "@material-ui/core";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import { useNavigate } from "react-router-dom";
 import "../styles/topBarStyles.scss";
 
 const styledButtons = makeStyles({
@@ -27,43 +28,60 @@ const styledButtons = makeStyles({
   },
 });
 
-function TopBar() {
+function TopBar(props: { selectedTab: string }) {
   const classes = styledButtons();
-  const [tab, setTab] = useState("Home");
+  const navigate = useNavigate();
+  const [tab, setTab] = useState(props.selectedTab);
+
+  const homeTabOnClick = () => {
+    if (tab === "Home") {
+      return;
+    }
+
+    setTab("Home");
+    navigate("/home");
+  };
+
+  const categoriesTabOnClick = () => {
+    if (tab === "Categories") {
+      return;
+    }
+    
+    setTab("Categories");
+    navigate("/categories");
+  };
 
   return (
-    <div className="bar">
-      <div className="barContainer">
-        <div className="budgetContainer">
-          <MonetizationOnIcon className="budgetIconContainer" />
-          <div className="budgetTitleContainer">BUDGET</div>
+    <div className="top-bar">
+      <div className="top-bar-container">
+        <div className="top-bar__budget-container">
+          <MonetizationOnIcon className="top-bar__budget-icon-container" />
+          <div className="top-bar__budget-title-container">BUDGET</div>
         </div>
 
         <div>
           <Button
+            disableRipple
             className={tab === "Home" ? classes.selected : classes.root}
             variant="outlined"
-            onClick={() => {
-              setTab("Home");
-            }}
+            onClick={homeTabOnClick}
           >
             Home
           </Button>
 
           <Button
+            disableRipple
             className={tab === "Categories" ? classes.selected : classes.root}
             variant="outlined"
-            onClick={() => {
-              setTab("Categories");
-            }}
+            onClick={categoriesTabOnClick}
           >
             Categories
           </Button>
         </div>
 
         <div>
-          <IconButton>
-            <AddIcon className="addButton" />
+          <IconButton disableRipple>
+            <AddIcon className="top-bar__add-button" />
           </IconButton>
         </div>
       </div>

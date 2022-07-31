@@ -5,8 +5,8 @@ import "../styles/homeStyles.scss";
 
 function HomeView() {
   return (
-    <div className="background">
-      <TopBar />
+    <div className="home__background">
+      <TopBar selectedTab="Home" />
     </div>
   );
 }
