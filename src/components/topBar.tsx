@@ -12,8 +12,8 @@ const styledButtons = makeStyles({
     fontWeight: "bold",
     color: "white",
     borderColor: "gray",
-    marginLeft: "8px",
-    marginRight: "8px",
+    marginLeft: "6px",
+    marginRight: "6px",
   },
 
   selected: {
@@ -23,8 +23,8 @@ const styledButtons = makeStyles({
     borderColor: "#f25d70",
     background: "linear-gradient(0.25turn, #f25d70, 90%, #c05e92)",
     boxShadow: "0px 0px 20px 5px rgba(99, 48, 84, 0.75)",
-    marginLeft: "8px",
-    marginRight: "8px",
+    marginLeft: "6px",
+    marginRight: "6px",
   },
 });
 
@@ -59,7 +59,7 @@ function TopBar(props: { selectedTab: string }) {
           <div className="top-bar__budget-title-container">BUDGET</div>
         </div>
 
-        <div>
+        <div className="top-bar__tab-container">
           <Button
             disableRipple
             className={tab === "Home" ? classes.selected : classes.root}

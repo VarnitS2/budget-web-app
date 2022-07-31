@@ -1,0 +1,15 @@
+.home-side-bar {
+    width: 27%;
+    min-width: 355px;
+    border-right: 1px solid #3d3d3f;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-side-bar__tab-container {
+    height: 120px;
+    border-bottom: 1px solid #3d3d3f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
