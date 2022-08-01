@@ -33,7 +33,7 @@
 .home__head-icon {
   transform: scale(0.8);
   color: gray;
-  margin-right: -5px;
+  margin-right: -2px;
 }
 
 .home__body {
@@ -56,9 +56,14 @@
   padding-right: 40px;
 }
 
-.home__body__main__header_title {
+.home__body__main__header__title {
   font-size: 36px;
   font-weight: 525;
+}
+
+.home__body__main__header__sort-icon {
+  transform: scale(1.4);
+  margin-left: -2px;
 }
 
 .home__body__main__transactions__list {
@@ -107,8 +112,15 @@
 }
 
 .home__body__main__transactions__item__id {
+  width: 15px;
+  text-align: center;
   color: gray;
-  padding-right: 75px;
+  margin-right: 75px;
+}
+
+.home__body__main__transactions__item__date {
+  width: 65px;
+  text-align: center;
 }
 
 .home__body__main__transactions__merchant {

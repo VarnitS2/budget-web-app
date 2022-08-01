@@ -50,15 +50,19 @@ function HomeView() {
   const classes = styledButtons();
   const [transactions, setTransactions] = useState<any[]>([]);
   const [isError, setIsError] = useState(false);
+  const [reverse, setReverse] = useState(true);
 
   useEffect(() => {
     getAllTransactions();
-  }, []);
+  }, [reverse]);
 
   const getAllTransactions = () => {
     const requestOptions = {
-      method: "GET",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        reverse: reverse,
+      }),
     };
 
     fetch("/transactions/getall", requestOptions)
@@ -74,6 +78,10 @@ function HomeView() {
         console.error(error);
         setIsError(true);
       });
+  };
+
+  const sortOnClick = () => {
+    setReverse(!reverse);
   };
 
   return (
@@ -119,10 +127,22 @@ function HomeView() {
 
         <div className="home__body__main">
           <div className="home__body__main__header">
-            <div className="home__body__main__header_title">Transactions</div>
+            <div className="home__body__main__header__title">Transactions</div>
 
             <div>
-              <Button disableRipple className={classes.sort} variant="outlined">
+              <Button
+                disableRipple
+                className={classes.sort}
+                variant="outlined"
+                onClick={sortOnClick}
+                endIcon={
+                  reverse ? (
+                    <ArrowDropDownIcon className="home__body__main__header__sort-icon" />
+                  ) : (
+                    <ArrowDropUpIcon className="home__body__main__header__sort-icon" />
+                  )
+                }
+              >
                 Sort
               </Button>
             </div>
@@ -137,14 +157,14 @@ function HomeView() {
                       ? "home__body__main__transactions__item-container--income"
                       : "home__body__main__transactions__item-container--expense"
                   }
-                  key={item.id}
+                  key={item.idx}
                 >
                   <div className="home__body__main__transactions__item__id-container">
                     <div className="home__body__main__transactions__item__id">
-                      {item.id}
+                      {item.idx}
                     </div>
 
-                    <div>
+                    <div className="home__body__main__transactions__item__date">
                       {new Date(item.transaction_date)
                         .toDateString()
                         .split(" ")

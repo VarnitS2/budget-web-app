@@ -1,5 +1,5 @@
 # GET all transactions
-# GET http://127.0.0.1:5000/transactions/getall
+GET http://127.0.0.1:5000/transactions/getall
 
 # POST a new transaction
 # POST http://127.0.0.1:5000/transactions/add HTTP/1.1
@@ -8,8 +8,8 @@
 # {
 #     "merchant": "test payroll",
 #     "transaction_type": "income",
-#     "amount": 152.83,
-#     "transaction_date": "2022-07-30"
+#     "amount": 11840.83,
+#     "transaction_date": "2022-03-31"
 # }
 
 # DELETE a transaction

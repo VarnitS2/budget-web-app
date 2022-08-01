@@ -9,22 +9,34 @@ import datetime
 bp = Blueprint('transactions', __name__, url_prefix='/transactions')
 
 
-@bp.route('/getall', methods=['GET'])
+@bp.route('/getall', methods=['POST'])
 def getall():
-    db = get_db()
+    if request.method == 'POST':
+        db = get_db()
+        is_reverse = request.get_json()['reverse']
 
-    try:
-        transactions = db.execute('SELECT * FROM transactions;').fetchall()
-    except db.Error as e:
-        return jsonify(status=500, message='Error: ' + e)
+        try:
+            transactions = db.execute('SELECT * FROM transactions;').fetchall()
+        except db.Error as e:
+            return jsonify(status=500, message='Error: ' + e)
+        else:
+            return_data = [{
+                'id': tuple(transaction)[0],
+                'merchant': tuple(transaction)[1],
+                'transaction_type': tuple(transaction)[2],
+                'amount': tuple(transaction)[3],
+                'transaction_date': tuple(transaction)[4].isoformat(),
+            } for transaction in transactions]
+
+            return_data = sorted(return_data, key= lambda d: d['transaction_date'], reverse=is_reverse)
+
+            for idx, data in enumerate(return_data):
+                data['idx'] = idx + 1
+            
+            return jsonify(status=200, message=return_data)
+
     else:
-        return jsonify(status=200, message=[{
-            'id': tuple(transaction)[0],
-            'merchant': tuple(transaction)[1],
-            'transaction_type': tuple(transaction)[2],
-            'amount': tuple(transaction)[3],
-            'transaction_date': tuple(transaction)[4].isoformat(),
-        } for transaction in transactions])
+        return jsonify(status=405, message='Method not allowed.')
 
 
 @bp.route('/add', methods=['POST'])
