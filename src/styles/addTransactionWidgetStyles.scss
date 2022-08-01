@@ -1,0 +1,26 @@
+.add-transaction {
+  width: 335px;
+  height: 450px;
+  border-radius: 20px;
+  background-color: #313131;
+  box-shadow: 0px 0px 20px 5px #181818;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-transaction__tab-container {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-transaction__merchant-container {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.add-transaction__merchant-text {
+  color: white;
+  border-color: white;
+}

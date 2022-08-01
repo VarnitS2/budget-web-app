@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useNavigate } from "react-router-dom";
+import AddTransaction from "./addTransactionWidget";
 import "../styles/topBarStyles.scss";
 
 const styledButtons = makeStyles({
@@ -32,6 +33,36 @@ function TopBar(props: { selectedTab: string }) {
   const classes = styledButtons();
   const navigate = useNavigate();
   const [tab, setTab] = useState(props.selectedTab);
+  const [addTransaction, setAddTransaction] = useState(false);
+  const [merchants, setMerchants] = useState<any[]>([]);
+
+  const getAllMerchants = () => {
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+
+    fetch("/transactions/getallmerchants", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          setMerchants(data.message);
+        } else {
+          console.log(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const addTransactionOnClick = () => {
+    if (!addTransaction) {
+        getAllMerchants();
+    }
+
+    setAddTransaction(!addTransaction);
+  };
 
   const homeTabOnClick = () => {
     if (tab === "Home") {
@@ -46,7 +77,7 @@ function TopBar(props: { selectedTab: string }) {
     if (tab === "Categories") {
       return;
     }
-    
+
     setTab("Categories");
     navigate("/categories");
   };
@@ -81,10 +112,21 @@ function TopBar(props: { selectedTab: string }) {
 
         <div>
           <IconButton disableRipple>
-            <AddIcon className="top-bar__add-button" />
+            <AddIcon
+              className="top-bar__add-button"
+              onClick={addTransactionOnClick}
+            />
           </IconButton>
         </div>
       </div>
+
+      {addTransaction ? (
+        <div className="top-bar__add-transaction-container">
+          <AddTransaction merchants={merchants} />
+        </div>
+      ) : (
+        <div />
+      )}
     </div>
   );
 }

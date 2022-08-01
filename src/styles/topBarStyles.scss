@@ -36,3 +36,10 @@
   transform: scale(1.3);
   color: white;
 }
+
+.top-bar__add-transaction-container {
+    position: absolute;
+    z-index: 1;
+    right: 30px;
+    top: 65px;
+}

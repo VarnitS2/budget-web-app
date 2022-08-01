@@ -10,7 +10,7 @@ bp = Blueprint('transactions', __name__, url_prefix='/transactions')
 
 
 @bp.route('/getall', methods=['POST'])
-def getall():
+def get_all():
     if request.method == 'POST':
         db = get_db()
         is_reverse = request.get_json()['reverse']
@@ -28,15 +28,31 @@ def getall():
                 'transaction_date': tuple(transaction)[4].isoformat(),
             } for transaction in transactions]
 
-            return_data = sorted(return_data, key= lambda d: d['transaction_date'], reverse=is_reverse)
+            return_data = sorted(
+                return_data, key=lambda d: d['transaction_date'], reverse=is_reverse)
 
             for idx, data in enumerate(return_data):
                 data['idx'] = idx + 1
-            
+
             return jsonify(status=200, message=return_data)
 
     else:
         return jsonify(status=405, message='Method not allowed.')
+
+
+@bp.route('/getallmerchants', methods=['GET'])
+def get_all_merchants():
+    db = get_db()
+
+    try:
+        merchants = db.execute(
+            'SELECT DISTINCT merchant FROM transactions;').fetchall()
+    except db.Error as e:
+        return jsonify(status=500, message='Error: ' + e)
+    else:
+        return jsonify(status=200, message=[{
+            'merchant': tuple(merchant)[0],
+        } for merchant in merchants])
 
 
 @bp.route('/add', methods=['POST'])
