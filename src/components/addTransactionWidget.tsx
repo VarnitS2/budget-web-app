@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import "../styles/addTransactionWidgetStyles.scss";
@@ -30,16 +31,41 @@ const styledButtons = makeStyles({
     marginRight: "6px",
     minWidth: "1px",
   },
+});
 
-  merchant: {
-    color: "white",
-    borderColor: "white",
+const merchantTheme = createTheme({
+  components: {
+    MuiAutocomplete: {
+      styleOverrides: {
+        inputRoot: {
+          color: "white",
+          paddingLeft: "20px",
+          paddingRight: "20px",
+        },
+        clearIndicator: {
+          color: "white",
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          borderColor: "white",
+          borderRadius: "15px",
+        },
+      },
+    },
   },
 });
 
 function AddTransaction(props: { merchants: any[] }) {
   const classes = styledButtons();
   const [transactionType, setTransactionType] = useState("expense");
+  const [merchant, setMerchant] = useState("");
+
+  const handleMerchantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMerchant(e.target.value);
+  };
 
   return (
     <div className="add-transaction">
@@ -72,20 +98,25 @@ function AddTransaction(props: { merchants: any[] }) {
       </div>
 
       <div className="add-transaction__merchant-container">
-        <Autocomplete
-          freeSolo
-          options={props.merchants.map((option) => option.merchant)}
-          renderInput={(params) => <TextField {...params} label="Merchant" />}
-          sx={{
-            display: "flex",
-            
-            '& input': {
-                color: (theme) =>
-              theme.palette.getContrastText(theme.palette.background.paper),
-                borderColor: "white",
-            },
-          }}
-        />
+        <ThemeProvider theme={merchantTheme}>
+          <Autocomplete
+            freeSolo
+            options={props.merchants.map((option) => option.merchant)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={
+                  <div style={{ color: "white", fontWeight: 400 }}>
+                    Merchant
+                  </div>
+                }
+                variant="outlined"
+                fullWidth
+                onChange={handleMerchantChange}
+              />
+            )}
+          />
+        </ThemeProvider>
       </div>
     </div>
   );
