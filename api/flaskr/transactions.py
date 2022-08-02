@@ -63,7 +63,7 @@ def add():
         transaction_type = request.get_json()['transaction_type']
         amount = request.get_json()['amount']
         transaction_date = datetime.date.fromisoformat(
-            request.get_json()['transaction_date'])
+            request.get_json()['transaction_date'].split('T')[0])
 
         try:
             db.execute(

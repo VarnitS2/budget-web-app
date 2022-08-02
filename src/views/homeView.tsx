@@ -86,7 +86,7 @@ function HomeView() {
 
   return (
     <div className="home__background">
-      <TopBar selectedTab="Home" />
+      <TopBar selectedTab="Home" addTransactionSaveCallback={getAllTransactions} />
 
       <div className="home__head-container-outer">
         <div className="home__head-container-inner">
@@ -150,14 +150,14 @@ function HomeView() {
 
           <ul className="home__body__main__transactions__list">
             {transactions.map((item) => (
-              <div className="home__body__main__transactions__item-container-background">
+              <div className="home__body__main__transactions__item-container-background" key={item.idx}>
                 <li
                   className={
                     item.transaction_type === "income"
                       ? "home__body__main__transactions__item-container--income"
                       : "home__body__main__transactions__item-container--expense"
                   }
-                  key={item.idx}
+                //   key={item.idx}
                 >
                   <div className="home__body__main__transactions__item__id-container">
                     <div className="home__body__main__transactions__item__id">

@@ -29,7 +29,7 @@ const styledButtons = makeStyles({
   },
 });
 
-function TopBar(props: { selectedTab: string }) {
+function TopBar(props: { selectedTab: string, addTransactionSaveCallback: Function }) {
   const classes = styledButtons();
   const navigate = useNavigate();
   const [tab, setTab] = useState(props.selectedTab);
@@ -58,7 +58,7 @@ function TopBar(props: { selectedTab: string }) {
 
   const addTransactionOnClick = () => {
     if (!addTransaction) {
-        getAllMerchants();
+      getAllMerchants();
     }
 
     setAddTransaction(!addTransaction);
@@ -80,6 +80,11 @@ function TopBar(props: { selectedTab: string }) {
 
     setTab("Categories");
     navigate("/categories");
+  };
+
+  const addTransactionSaveOnClick = () => {
+    setAddTransaction(false);
+    props.addTransactionSaveCallback();
   };
 
   return (
@@ -111,18 +116,15 @@ function TopBar(props: { selectedTab: string }) {
         </div>
 
         <div>
-          <IconButton disableRipple>
-            <AddIcon
-              className="top-bar__add-button"
-              onClick={addTransactionOnClick}
-            />
+          <IconButton disableRipple onClick={addTransactionOnClick}>
+            <AddIcon className="top-bar__add-button" />
           </IconButton>
         </div>
       </div>
 
       {addTransaction ? (
         <div className="top-bar__add-transaction-container">
-          <AddTransaction merchants={merchants} />
+          <AddTransaction merchants={merchants} saveCallback={addTransactionSaveOnClick} />
         </div>
       ) : (
         <div />
