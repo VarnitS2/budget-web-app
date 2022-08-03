@@ -51,6 +51,7 @@ function HomeView() {
   const [transactions, setTransactions] = useState<any[]>([]);
   const [isError, setIsError] = useState(false);
   const [reverse, setReverse] = useState(true);
+  const [pingSideBar, setPingSideBar] = useState(false);
 
   useEffect(() => {
     getAllTransactions();
@@ -80,13 +81,18 @@ function HomeView() {
       });
   };
 
+  const addTransactionOnSaveCallback = () => {
+    getAllTransactions();
+    setPingSideBar(!pingSideBar);
+  }
+
   const sortOnClick = () => {
     setReverse(!reverse);
   };
 
   return (
     <div className="home__background">
-      <TopBar selectedTab="Home" addTransactionSaveCallback={getAllTransactions} />
+      <TopBar selectedTab="Home" addTransactionSaveCallback={addTransactionOnSaveCallback} />
 
       <div className="home__head-container-outer">
         <div className="home__head-container-inner">
@@ -123,7 +129,7 @@ function HomeView() {
       </div>
 
       <div className="home__body">
-        <HomeSideBar />
+        <HomeSideBar dataRefresh={pingSideBar} />
 
         <div className="home__body__main">
           <div className="home__body__main__header">

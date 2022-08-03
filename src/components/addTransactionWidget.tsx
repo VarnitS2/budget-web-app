@@ -83,7 +83,7 @@ function AddTransaction(props: { merchants: any[], saveCallback: Function }) {
   const classes = styledButtons();
   const [transactionType, setTransactionType] = useState("expense");
   const [merchant, setMerchant] = useState("");
-  const [transactionDate, setTransactionDate] = useState<Date | null>();
+  const [transactionDate, setTransactionDate] = useState<Date | null>(null);
   const [amount, setAmount] = useState("");
 
   const handleMerchantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,7 +163,7 @@ function AddTransaction(props: { merchants: any[], saveCallback: Function }) {
               <TextField
                 {...params}
                 label={
-                  <div style={{ color: "white", fontWeight: 400 }}>
+                  <div style={{ color: "gray", fontWeight: 400 }}>
                     Merchant
                   </div>
                 }
@@ -185,6 +185,7 @@ function AddTransaction(props: { merchants: any[], saveCallback: Function }) {
               value={transactionDate}
               onChange={handleTransactionDateChange}
               renderInput={(params) => <TextField {...params} fullWidth />}
+              disableFuture
             />
           </LocalizationProvider>
         </ThemeProvider>
