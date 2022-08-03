@@ -84,7 +84,7 @@ function HomeView() {
   const addTransactionOnSaveCallback = () => {
     getAllTransactions();
     setPingSideBar(!pingSideBar);
-  }
+  };
 
   const sortOnClick = () => {
     setReverse(!reverse);
@@ -92,7 +92,10 @@ function HomeView() {
 
   return (
     <div className="home__background">
-      <TopBar selectedTab="Home" addTransactionSaveCallback={addTransactionOnSaveCallback} />
+      <TopBar
+        selectedTab="Home"
+        addTransactionSaveCallback={addTransactionOnSaveCallback}
+      />
 
       <div className="home__head-container-outer">
         <div className="home__head-container-inner">
@@ -154,47 +157,52 @@ function HomeView() {
             </div>
           </div>
 
-          <ul className="home__body__main__transactions__list">
-            {transactions.map((item) => (
-              <div className="home__body__main__transactions__item-container-background" key={item.idx}>
-                <li
-                  className="home__body__main__transactions__item-container"
-                >
-                  <div className="home__body__main__transactions__item__id-container">
-                    <div className="home__body__main__transactions__item__id">
-                      {item.idx}
-                    </div>
+          <div className="home__body__main__transactions__list-container">
+            <ul className="home__body__main__transactions__list">
+              {transactions.map((item) => (
+                <li key={item.idx}>
+                  <div className="home__body__main__transactions__item-container-background">
+                    <div className="home__body__main__transactions__item-container">
+                      <div className="home__body__main__transactions__item__id-container">
+                        <div className="home__body__main__transactions__item__id">
+                          {item.idx}
+                        </div>
 
-                    <div className="home__body__main__transactions__item__date">
-                      {new Date(item.transaction_date)
-                        .toDateString()
-                        .split(" ")
-                        .slice(1, -1)
-                        .join(" ")}
-                    </div>
-                  </div>
+                        <div className="home__body__main__transactions__item__date">
+                          {new Date(item.transaction_date)
+                            .toDateString()
+                            .split(" ")
+                            .slice(1, -1)
+                            .join(" ")}
+                        </div>
+                      </div>
 
-                  <div className="home__body__main__transactions__merchant">
-                    {item.merchant}
-                  </div>
+                      <div className="home__body__main__transactions__merchant">
+                        {item.merchant}
+                      </div>
 
-                  <div className="home__body__main__transactions__item__type-container">
-                    <div className="home__body__main__transactions__amount">
-                      ${item.amount.toLocaleString("en", { useGrouping: true })}
-                    </div>
+                      <div className="home__body__main__transactions__item__type-container">
+                        <div className="home__body__main__transactions__amount">
+                          $
+                          {item.amount.toLocaleString("en", {
+                            useGrouping: true,
+                          })}
+                        </div>
 
-                    <div>
-                      {item.transaction_type === "income" ? (
-                        <ArrowDropUpIcon className="home__body__main__transactions__item__type--income" />
-                      ) : (
-                        <ArrowDropDownIcon className="home__body__main__transactions__item__type--expense" />
-                      )}
+                        <div>
+                          {item.transaction_type === "income" ? (
+                            <ArrowDropUpIcon className="home__body__main__transactions__item__type--income" />
+                          ) : (
+                            <ArrowDropDownIcon className="home__body__main__transactions__item__type--expense" />
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </li>
-              </div>
-            ))}
-          </ul>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

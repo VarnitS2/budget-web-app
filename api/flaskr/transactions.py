@@ -31,7 +31,7 @@ def get_all():
                 'merchant': tuple(transaction)[TRANSACTION_MERCHANT],
                 'transaction_type': tuple(transaction)[TRANSACTION_TYPE],
                 'amount': tuple(transaction)[TRANSACTION_AMOUNT],
-                'transaction_date': tuple(transaction)[TRANSACTION_DATE].isoformat(),
+                'transaction_date': (tuple(transaction)[TRANSACTION_DATE] + datetime.timedelta(days=1)).isoformat(),
             } for transaction in transactions]
 
             return_data = sorted(

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
-import CircularProgress, {
-  CircularProgressProps,
-} from "@mui/material/CircularProgress";
 import "../styles/homeSideBarStyles.scss";
 
 const styledButtons = makeStyles({
@@ -80,7 +77,7 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
       </div>
 
       <div className="home-side-bar__body">
-        <div className="home-side-bar__body__container">
+        <div className="home-side-bar__body__container__balance">
           <div className="home-side-bar__body__container__balance-title">
             Balance
           </div>
@@ -90,7 +87,23 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
           </div>
         </div>
 
-        <div className="home-side-bar__body__container"></div>
+        <div className="home-side-bar__body__row-container">
+          <div className="home-side-bar__body__container__income">
+            <div className="home-side-bar__body__container__income-amount">
+              ${income.toLocaleString("en", { useGrouping: true })}
+            </div>
+
+            <div className="home-side-bar__body__container__income-title">
+              Income
+            </div>
+          </div>
+
+          <div></div>
+
+          <div className="home-side-bar__body__container__expense">
+            Expenses
+          </div>
+        </div>
       </div>
     </div>
   );

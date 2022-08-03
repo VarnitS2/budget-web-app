@@ -66,15 +66,19 @@
   margin-left: -2px;
 }
 
-.home__body__main__transactions__list {
+.home__body__main__transactions__list-container {
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
+}
+
+.home__body__main__transactions__list {
+  height: 867px;
   font-size: 20px;
   font-weight: 600;
   padding-inline-start: 0px;
   margin-top: 0px;
-  overflow: auto;
+  margin-block-end: 0px;
+  overflow-y: scroll;
 }
 
 .home__body__main__transactions__item-container {

@@ -23,7 +23,7 @@
   padding-right: 25px;
 }
 
-.home-side-bar__body__container {
+.home-side-bar__body__container__balance {
   background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
   background-clip: text;
   color: transparent;
@@ -32,13 +32,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.home-side-bar__body__container:first-child {
   margin-bottom: 20px;
 }
 
-.home-side-bar__body__container:hover {
+.home-side-bar__body__container__balance:hover {
   color: white;
   border-radius: 20px;
   border-color: #f25d70;
@@ -54,4 +51,56 @@
 .home-side-bar__body__container__balance-amount {
   font-size: 64px;
   margin-right: 25px;
+}
+
+.home-side-bar__body__row-container {
+  width: 100%;
+  height: 125px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.home-side-bar__body__container__income {
+  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  background-clip: text;
+  color: transparent;
+  width: 200px;
+  height: 125px;
+  display: flex;
+}
+
+.home-side-bar__body__container__income:hover {
+  color: white;
+  border-radius: 20px;
+  border-color: #f25d70;
+  background: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  box-shadow: 0px 0px 25px 10px rgba(99, 48, 84, 0.75);
+}
+
+.home-side-bar__body__container__income-title {
+  font-size: 14px;
+  margin-left: 15px;
+}
+
+.home-side-bar__body__container__income-amount {
+  font-size: 14px;
+  margin-left: 15px;
+}
+
+.home-side-bar__body__container__expense {
+  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  background-clip: text;
+  color: transparent;
+  width: 200px;
+  height: 125px;
+  text-align: left;
+}
+
+.home-side-bar__body__container__expense:hover {
+  color: white;
+  border-radius: 20px;
+  border-color: #f25d70;
+  background: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  box-shadow: 0px 0px 25px 10px rgba(99, 48, 84, 0.75);
 }
