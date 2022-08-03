@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
+import CircularProgress, {
+  CircularProgressProps,
+} from "@mui/material/CircularProgress";
 import "../styles/homeSideBarStyles.scss";
 
 const styledButtons = makeStyles({
@@ -27,6 +30,8 @@ const styledButtons = makeStyles({
 function HomeSideBar(props: { dataRefresh: boolean }) {
   const classes = styledButtons();
   const [balance, setBalance] = useState(0.0);
+  const [income, setIncome] = useState(0.0);
+  const [expense, setExpense] = useState(0.0);
 
   useEffect(() => {
     getBalance();
@@ -42,11 +47,13 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
       }),
     };
 
-    fetch("/transactions/getbalance", requestOptions)
+    fetch("/transactions/getsidebar", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.status === 200) {
-          setBalance(data.message);
+          setBalance(data.message.balance);
+          setIncome(data.message.income);
+          setExpense(data.message.expense);
         } else {
           console.log(data.message);
         }
@@ -60,15 +67,15 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
     <div className="home-side-bar">
       <div className="home-side-bar__tab-container">
         <Button disableRipple className={classes.selected} variant="outlined">
-          All
+          Breakdown
         </Button>
 
         <Button disableRipple className={classes.root} variant="outlined">
-          This month
+          Categories
         </Button>
 
         <Button disableRipple className={classes.root} variant="outlined">
-          This year
+          Notes
         </Button>
       </div>
 
@@ -82,6 +89,8 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
             ${balance.toLocaleString("en", { useGrouping: true })}
           </div>
         </div>
+
+        <div className="home-side-bar__body__container"></div>
       </div>
     </div>
   );

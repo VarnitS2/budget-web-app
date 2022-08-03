@@ -61,7 +61,7 @@ def get_all_merchants():
         } for merchant in merchants])
 
 
-@bp.route('/getbalance', methods=['POST'])
+@bp.route('/getsidebar', methods=['POST'])
 def get_balance():
     if request.method == 'POST':
         db = get_db()
@@ -81,20 +81,29 @@ def get_balance():
             else:
                 end_date = datetime.date.fromisoformat(end_date)
 
-            transactions = db.execute('SELECT * FROM transactions WHERE transaction_date BETWEEN ? AND ?;', (start_date, end_date)).fetchall()
+            transactions = db.execute(
+                'SELECT * FROM transactions WHERE transaction_date BETWEEN ? AND ?;', (start_date, end_date)).fetchall()
             balance = 0.0
+            income = 0.0
+            expense = 0.0
             for transaction in transactions:
                 transaction = tuple(transaction)
 
                 if transaction[TRANSACTION_TYPE] == 'income':
                     balance += transaction[TRANSACTION_AMOUNT]
+                    income += transaction[TRANSACTION_AMOUNT]
                 elif transaction[TRANSACTION_TYPE] == 'expense':
                     balance -= transaction[TRANSACTION_AMOUNT]
+                    expense += transaction[TRANSACTION_AMOUNT]
 
         except db.Error as e:
             return jsonify(status=500, message='Error: ' + e)
         else:
-            return jsonify(status=200, message=round(balance, 2))
+            return jsonify(status=200, message={
+                'balance': round(balance, 2),
+                'income': round(income, 2),
+                'expense': round(expense, 2)
+            })
 
     else:
         return jsonify(status=405, message='Method not allowed.')

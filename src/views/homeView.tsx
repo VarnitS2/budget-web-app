@@ -158,12 +158,7 @@ function HomeView() {
             {transactions.map((item) => (
               <div className="home__body__main__transactions__item-container-background" key={item.idx}>
                 <li
-                  className={
-                    item.transaction_type === "income"
-                      ? "home__body__main__transactions__item-container--income"
-                      : "home__body__main__transactions__item-container--expense"
-                  }
-                //   key={item.idx}
+                  className="home__body__main__transactions__item-container"
                 >
                   <div className="home__body__main__transactions__item__id-container">
                     <div className="home__body__main__transactions__item__id">
@@ -184,16 +179,16 @@ function HomeView() {
                   </div>
 
                   <div className="home__body__main__transactions__item__type-container">
-                    <div>
-                      {item.transaction_type === "income" ? (
-                        <ArrowDropUpIcon className="home__body__main__transactions__item__type" />
-                      ) : (
-                        <ArrowDropDownIcon className="home__body__main__transactions__item__type" />
-                      )}
+                    <div className="home__body__main__transactions__amount">
+                      ${item.amount.toLocaleString("en", { useGrouping: true })}
                     </div>
 
-                    <div className="home__body__main__transactions__amount">
-                      ${item.amount}
+                    <div>
+                      {item.transaction_type === "income" ? (
+                        <ArrowDropUpIcon className="home__body__main__transactions__item__type--income" />
+                      ) : (
+                        <ArrowDropDownIcon className="home__body__main__transactions__item__type--expense" />
+                      )}
                     </div>
                   </div>
                 </li>
