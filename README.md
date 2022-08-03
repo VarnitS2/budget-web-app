@@ -1,16 +1,29 @@
-## Available Scripts
+# App Setup
 
-In the project directory, you can run:
+## Install Backend Dependencies
 
-### `npm start`
+This app uses a virtual environment to manage dependencies.
 
-Runs the app in the development mode.\
+```
+$ cd api
+$ python3 -m venv venv
+$ . venv/bin/activate
+$ pip install -r requirements.txt
+```
+
+# Available Scripts
+
+## Run the Frontend
+
+```
+$ npm start
+```
+
+Runs the app in development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Run the Backend
 
-### `npm run start-api`
-
-Runs the backend server.\
-Required for the app to function properly.
+```
+$ npm run start-api
+```
