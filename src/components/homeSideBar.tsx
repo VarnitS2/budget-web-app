@@ -29,6 +29,8 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
   const [balance, setBalance] = useState(0.0);
   const [income, setIncome] = useState(0.0);
   const [expense, setExpense] = useState(0.0);
+  const [avgPerDay, setAvgPerDay] = useState(0.0);
+  const [maxPerDay, setMaxPerDay] = useState(0.0);
 
   useEffect(() => {
     getBalance();
@@ -51,6 +53,8 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
           setBalance(data.message.balance);
           setIncome(data.message.income);
           setExpense(data.message.expense);
+          setAvgPerDay(data.message.avg_per_day);
+          setMaxPerDay(data.message.max_per_day);
         } else {
           console.log(data.message);
         }
@@ -88,20 +92,62 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
         </div>
 
         <div className="home-side-bar__body__row-container">
-          <div className="home-side-bar__body__container__income">
-            <div className="home-side-bar__body__container__income-amount">
-              ${income.toLocaleString("en", { useGrouping: true })}
+          <div className="home-side-bar__body__row-container-item">
+            <div className="home-side-bar__body__overview-container-cell">
+              <div className="home-side-bar__body__overview-container-cell__income-amount">
+                ${income.toLocaleString("en", { useGrouping: true })}
+              </div>
+
+              <div className="home-side-bar__body__overview-container-cell__income-title">
+                Income
+              </div>
             </div>
 
-            <div className="home-side-bar__body__container__income-title">
-              Income
+            <div className="home-side-bar__body__overview-container-cell">
+              <div className="home-side-bar__body__overview-container-cell__expense-amount">
+                ${expense.toLocaleString("en", { useGrouping: true })}
+              </div>
+
+              <div className="home-side-bar__body__overview-container-cell__expense-title">
+                Expenses
+              </div>
             </div>
           </div>
+        </div>
 
-          <div></div>
+        <div className="home-side-bar__body__row-container">
+          <div className="home-side-bar__body__row-container-item">
+            <div className="home-side-bar__body__avg-per-day-container-cell">
+              <div className="home-side-bar__body__avg-per-day-container-cell__amount-container">
+                <div className="home-side-bar__body__avg-per-day-container-cell__amount">
+                  ${avgPerDay.toLocaleString("en", { useGrouping: true })}
+                </div>
 
-          <div className="home-side-bar__body__container__expense">
-            Expenses
+                <div className="home-side-bar__body__avg-per-day-container-cell__amount-days">
+                  / day
+                </div>
+              </div>
+
+              <div className="home-side-bar__body__avg-per-day-container-cell__title">
+                Average
+              </div>
+            </div>
+
+            <div className="home-side-bar__body__max-per-day-container-cell">
+              <div className="home-side-bar__body__max-per-day-container-cell__amount-container">
+                <div className="home-side-bar__body__max-per-day-container-cell__amount">
+                  ${maxPerDay.toLocaleString("en", { useGrouping: true })}
+                </div>
+
+                <div className="home-side-bar__body__max-per-day-container-cell__amount-days">
+                  / day
+                </div>
+              </div>
+
+              <div className="home-side-bar__body__max-per-day-container-cell__title">
+                Max
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -70,14 +70,14 @@ def get_balance():
 
         try:
             if start_date == "":
-                start_date = tuple(db.execute(
-                    'SELECT MIN(transaction_date) FROM transactions;').fetchone())[0]
+                start_date = datetime.date.fromisoformat(tuple(db.execute(
+                    'SELECT MIN(transaction_date) FROM transactions;').fetchone())[0])
             else:
                 start_date = datetime.date.fromisoformat(start_date)
 
             if end_date == "":
-                end_date = tuple(db.execute(
-                    'SELECT MAX(transaction_date) FROM transactions;').fetchone())[0]
+                end_date = datetime.date.fromisoformat(tuple(db.execute(
+                    'SELECT MAX(transaction_date) FROM transactions;').fetchone())[0])
             else:
                 end_date = datetime.date.fromisoformat(end_date)
 
@@ -96,13 +96,18 @@ def get_balance():
                     balance -= transaction[TRANSACTION_AMOUNT]
                     expense += transaction[TRANSACTION_AMOUNT]
 
+            avg_per_day = expense / (end_date - start_date).days
+            max_per_day = income / (end_date - start_date).days
+
         except db.Error as e:
             return jsonify(status=500, message='Error: ' + e)
         else:
             return jsonify(status=200, message={
                 'balance': round(balance, 2),
                 'income': round(income, 2),
-                'expense': round(expense, 2)
+                'expense': round(expense, 2),
+                'avg_per_day': round(avg_per_day, 2),
+                'max_per_day': round(max_per_day, 2)
             })
 
     else:

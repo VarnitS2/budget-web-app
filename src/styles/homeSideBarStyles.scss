@@ -45,11 +45,13 @@
 
 .home-side-bar__body__container__balance-title {
   font-size: 28px;
+  font-weight: 600;
   margin-left: 25px;
 }
 
 .home-side-bar__body__container__balance-amount {
   font-size: 64px;
+  font-weight: 500;
   margin-right: 25px;
 }
 
@@ -57,50 +59,208 @@
   width: 100%;
   height: 125px;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  flex-direction: column;
 }
 
-.home-side-bar__body__container__income {
-  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
-  background-clip: text;
-  color: transparent;
-  width: 200px;
-  height: 125px;
+.home-side-bar__body__row-container-item {
   display: flex;
 }
 
-.home-side-bar__body__container__income:hover {
-  color: white;
+.home-side-bar__body__overview-container-cell {
+  width: 50%;
+  height: 125px;
+  position: relative;
+}
+
+.home-side-bar__body__overview-container-cell:hover {
   border-radius: 20px;
   border-color: #f25d70;
   background: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
   box-shadow: 0px 0px 25px 10px rgba(99, 48, 84, 0.75);
 }
 
-.home-side-bar__body__container__income-title {
-  font-size: 14px;
-  margin-left: 15px;
-}
-
-.home-side-bar__body__container__income-amount {
-  font-size: 14px;
-  margin-left: 15px;
-}
-
-.home-side-bar__body__container__expense {
+.home-side-bar__body__overview-container-cell__income-title {
   background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
   background-clip: text;
   color: transparent;
-  width: 200px;
-  height: 125px;
-  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
 }
 
-.home-side-bar__body__container__expense:hover {
+.home-side-bar__body__overview-container-cell:hover
+  .home-side-bar__body__overview-container-cell__income-title {
   color: white;
+}
+
+.home-side-bar__body__overview-container-cell__income-amount {
+  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  background-clip: text;
+  color: transparent;
+  font-size: 32px;
+  font-weight: 500;
+  position: absolute;
+  left: 20%;
+  top: 27.5%;
+}
+
+.home-side-bar__body__overview-container-cell:hover
+  .home-side-bar__body__overview-container-cell__income-amount {
+  color: white;
+}
+
+.home-side-bar__body__overview-container-cell__expense-title {
+  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  background-clip: text;
+  color: transparent;
+  font-size: 18px;
+  font-weight: 600;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+.home-side-bar__body__overview-container-cell:hover
+  .home-side-bar__body__overview-container-cell__expense-title {
+  color: white;
+}
+
+.home-side-bar__body__overview-container-cell__expense-amount {
+  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  background-clip: text;
+  color: transparent;
+  font-size: 32px;
+  font-weight: 500;
+  position: absolute;
+  left: 20%;
+  top: 27.5%;
+}
+
+.home-side-bar__body__overview-container-cell:hover
+  .home-side-bar__body__overview-container-cell__expense-amount {
+  color: white;
+}
+
+.home-side-bar__body__avg-per-day-container-cell {
+  width: 50%;
+  height: 125px;
+  position: relative;
+}
+
+.home-side-bar__body__avg-per-day-container-cell:hover {
   border-radius: 20px;
   border-color: #f25d70;
   background: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
   box-shadow: 0px 0px 25px 10px rgba(99, 48, 84, 0.75);
+}
+
+.home-side-bar__body__avg-per-day-container-cell__amount-container {
+  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  background-clip: text;
+  color: transparent;
+  display: flex;
+  position: absolute;
+  left: 20%;
+  top: 27.5%;
+}
+
+.home-side-bar__body__avg-per-day-container-cell__amount {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.home-side-bar__body__avg-per-day-container-cell:hover
+  .home-side-bar__body__avg-per-day-container-cell__amount {
+  color: white;
+}
+
+.home-side-bar__body__avg-per-day-container-cell__amount-days {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 12px;
+  margin-left: 10px;
+}
+
+.home-side-bar__body__avg-per-day-container-cell:hover
+  .home-side-bar__body__avg-per-day-container-cell__amount-days {
+  color: white;
+}
+
+.home-side-bar__body__avg-per-day-container-cell__title {
+  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  background-clip: text;
+  color: transparent;
+  font-size: 18px;
+  font-weight: 600;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+.home-side-bar__body__avg-per-day-container-cell:hover
+  .home-side-bar__body__avg-per-day-container-cell__title {
+  color: white;
+}
+
+.home-side-bar__body__max-per-day-container-cell {
+  width: 50%;
+  height: 125px;
+  position: relative;
+}
+
+.home-side-bar__body__max-per-day-container-cell:hover {
+  border-radius: 20px;
+  border-color: #f25d70;
+  background: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  box-shadow: 0px 0px 25px 10px rgba(99, 48, 84, 0.75);
+}
+
+.home-side-bar__body__max-per-day-container-cell__amount-container {
+  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  background-clip: text;
+  color: transparent;
+  display: flex;
+  position: absolute;
+  left: 20%;
+  top: 27.5%;
+}
+
+.home-side-bar__body__max-per-day-container-cell__amount {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.home-side-bar__body__max-per-day-container-cell:hover
+  .home-side-bar__body__max-per-day-container-cell__amount {
+  color: white;
+}
+
+.home-side-bar__body__max-per-day-container-cell__amount-days {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 12px;
+  margin-left: 10px;
+}
+
+.home-side-bar__body__max-per-day-container-cell:hover
+  .home-side-bar__body__max-per-day-container-cell__amount-days {
+  color: white;
+}
+
+.home-side-bar__body__max-per-day-container-cell__title {
+  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+  background-clip: text;
+  color: transparent;
+  font-size: 18px;
+  font-weight: 600;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+.home-side-bar__body__max-per-day-container-cell:hover
+  .home-side-bar__body__max-per-day-container-cell__title {
+  color: white;
 }
