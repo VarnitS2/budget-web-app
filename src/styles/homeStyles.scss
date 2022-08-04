@@ -125,7 +125,7 @@
 }
 
 .home__body__main__transactions__item__id-container {
-  width: 200px;
+  width: 230px;
   display: flex;
 }
 
@@ -133,12 +133,12 @@
   width: 15px;
   text-align: center;
   color: gray;
-  margin-right: 75px;
+  margin-right: 40px;
 }
 
 .home__body__main__transactions__item__date {
-  width: 125px;
-  text-align: center;
+  width: auto;
+  padding-right: 10px;
 }
 
 .home__body__main__transactions__merchant {
@@ -187,6 +187,10 @@
   padding-right: 15px;
   align-items: center;
   cursor: pointer;
+}
+
+.home__body__main__transactions__more-popper__option-container:hover {
+  background: dimgrey;
 }
 
 .home__body__main__transactions__more-popper__option-icon {
