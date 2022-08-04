@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
@@ -79,7 +79,7 @@ const themes = createTheme({
   },
 });
 
-function AddTransaction(props: { merchants: any[], saveCallback: Function }) {
+function AddTransaction(props: { merchants: any[]; saveCallback: Function }) {
   const classes = styledButtons();
   const [transactionType, setTransactionType] = useState("expense");
   const [merchant, setMerchant] = useState("");
@@ -88,6 +88,10 @@ function AddTransaction(props: { merchants: any[], saveCallback: Function }) {
 
   const handleMerchantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMerchant(e.target.value);
+  };
+
+  const handleMerchantAutocomplete = (e: Object, values: any) => {
+    setMerchant(values);
   };
 
   const handleTransactionDateChange = (e: Date | null) => {
@@ -100,28 +104,28 @@ function AddTransaction(props: { merchants: any[], saveCallback: Function }) {
 
   const handleSaveClick = () => {
     const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          merchant: merchant,
-          transaction_type: transactionType,
-          amount: parseFloat(amount),
-          transaction_date: transactionDate,
-        }),
-      };
-  
-      fetch("/transactions/add", requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === 200) {
-            props.saveCallback();
-          } else {
-            console.log(data.message);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        merchant: merchant,
+        transaction_type: transactionType,
+        amount: parseFloat(amount),
+        transaction_date: transactionDate,
+      }),
+    };
+
+    fetch("/transactions/add", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          props.saveCallback();
+        } else {
+          console.log(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -159,13 +163,12 @@ function AddTransaction(props: { merchants: any[], saveCallback: Function }) {
           <Autocomplete
             freeSolo
             options={props.merchants.map((option) => option.merchant)}
+            onChange={handleMerchantAutocomplete}
             renderInput={(params) => (
               <TextField
                 {...params}
                 label={
-                  <div style={{ color: "gray", fontWeight: 400 }}>
-                    Merchant
-                  </div>
+                  <div style={{ color: "gray", fontWeight: 400 }}>Merchant</div>
                 }
                 variant="outlined"
                 fullWidth

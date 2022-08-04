@@ -81,9 +81,13 @@
   overflow-y: scroll;
 }
 
+.home__body__main__transactions__list::-webkit-scrollbar {
+  display: none;
+}
+
 .home__body__main__transactions__item-container {
   padding-left: 30px;
-  padding-right: 30px;
+  padding-right: 10px;
   height: 50px;
   display: flex;
   justify-content: space-between;
@@ -159,4 +163,34 @@
 .home__body__main__transactions__amount {
   width: 125px;
   text-align: end;
+}
+
+.home__body__main__transactions__more-icon-container {
+  margin-left: 40px;
+}
+
+.home__body__main__transactions__more-popper {
+  width: 95px;
+}
+
+.home__body__main__transactions__more-popper__option-container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 15px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.home__body__main__transactions__more-popper__option-icon {
+  transform: scale(0.6);
+}
+
+.home__body__main__transactions__more-popper__option-label {
+  text-transform: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
 }

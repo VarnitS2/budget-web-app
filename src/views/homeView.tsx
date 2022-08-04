@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
+import IconButton from "@mui/material/IconButton";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Popper, { PopperPlacementType } from "@mui/material/Popper";
+import Fade from "@mui/material/Fade";
+import Paper from "@mui/material/Paper";
 import TopBar from "../components/topBar";
 import HomeSideBar from "../components/homeSideBar";
 import "../styles/homeStyles.scss";
@@ -44,6 +51,15 @@ const styledButtons = makeStyles({
     marginRight: "6px",
     minWidth: "1px",
   },
+
+  moreIcon: {
+    "&.MuiIconButton-root": {
+      color: "gray",
+      "&:hover": {
+        color: "white",
+      },
+    },
+  },
 });
 
 function HomeView() {
@@ -52,6 +68,14 @@ function HomeView() {
   const [isError, setIsError] = useState(false);
   const [reverse, setReverse] = useState(true);
   const [pingSideBar, setPingSideBar] = useState(false);
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(
+    null
+  );
+  const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState<PopperPlacementType>();
+  
+  const [selectedTransactionId, setSelectedTransactionId] = useState<Number | null>(null);
 
   useEffect(() => {
     getAllTransactions();
@@ -81,6 +105,33 @@ function HomeView() {
       });
   };
 
+  const deleteTransaction = () => {
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: selectedTransactionId,
+        }),
+      };
+  
+      fetch("/transactions/delete", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            getAllTransactions();
+            setPingSideBar(!pingSideBar);
+            setOpen(false);
+          } else {
+            setIsError(true);
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          setIsError(true);
+        });
+  };
+
   const addTransactionOnSaveCallback = () => {
     getAllTransactions();
     setPingSideBar(!pingSideBar);
@@ -90,8 +141,46 @@ function HomeView() {
     setReverse(!reverse);
   };
 
+  const handleMoreOnClick =
+    (newPlacement: PopperPlacementType, transactionId: Number) =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+      setOpen((prev) => placement !== newPlacement || !prev);
+      setPlacement(newPlacement);
+      setSelectedTransactionId(transactionId);
+    };
+
   return (
     <div className="home__background">
+      <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={500}>
+            <Paper>
+              <div className="home__body__main__transactions__more-popper">
+                <div
+                  className="home__body__main__transactions__more-popper__option-container"
+                  onClick={() => {
+                    console.log("hello");
+                  }}
+                >
+                  <EditIcon className="home__body__main__transactions__more-popper__option-icon" />
+                  <div className="home__body__main__transactions__more-popper__option-label">
+                    Edit
+                  </div>
+                </div>
+
+                <div className="home__body__main__transactions__more-popper__option-container" onClick={deleteTransaction}>
+                  <DeleteIcon className="home__body__main__transactions__more-popper__option-icon" />
+                  <div className="home__body__main__transactions__more-popper__option-label">
+                    Delete
+                  </div>
+                </div>
+              </div>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
+
       <TopBar
         selectedTab="Home"
         addTransactionSaveCallback={addTransactionOnSaveCallback}
@@ -196,6 +285,16 @@ function HomeView() {
                             <ArrowDropDownIcon className="home__body__main__transactions__item__type--expense" />
                           )}
                         </div>
+                      </div>
+
+                      <div className="home__body__main__transactions__more-icon-container">
+                        <IconButton
+                          disableRipple
+                          className={classes.moreIcon}
+                          onClick={handleMoreOnClick("top-end", item.id)}
+                        >
+                          <MoreHorizIcon />
+                        </IconButton>
                       </div>
                     </div>
                   </div>
