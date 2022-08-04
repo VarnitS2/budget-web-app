@@ -66,21 +66,21 @@
   display: flex;
 }
 
-.home-side-bar__body__overview-container-cell {
+.home-side-bar__body__income-container-cell {
   width: 50%;
   height: 125px;
   position: relative;
 }
 
-.home-side-bar__body__overview-container-cell:hover {
+.home-side-bar__body__income-container-cell:hover {
   border-radius: 20px;
-  border-color: #f25d70;
-  background: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
-  box-shadow: 0px 0px 25px 10px rgba(99, 48, 84, 0.75);
+  border-color: #017921;
+  background: linear-gradient(0.375turn, #25f45c, 33%, #017921);
+  box-shadow: 0px 0px 25px 10px #017921b4;
 }
 
-.home-side-bar__body__overview-container-cell__income-title {
-  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+.home-side-bar__body__income-container-cell__title {
+  background-image: linear-gradient(0.375turn, #3ff670, 33%, #05a12e);
   background-clip: text;
   color: transparent;
   font-size: 18px;
@@ -90,13 +90,13 @@
   bottom: 15px;
 }
 
-.home-side-bar__body__overview-container-cell:hover
-  .home-side-bar__body__overview-container-cell__income-title {
+.home-side-bar__body__income-container-cell:hover
+  .home-side-bar__body__income-container-cell__title {
   color: white;
 }
 
-.home-side-bar__body__overview-container-cell__income-amount {
-  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+.home-side-bar__body__income-container-cell__amount {
+  background-image: linear-gradient(0.375turn, #3ff670, 33%, #05a12e);
   background-clip: text;
   color: transparent;
   font-size: 32px;
@@ -106,13 +106,26 @@
   top: 27.5%;
 }
 
-.home-side-bar__body__overview-container-cell:hover
-  .home-side-bar__body__overview-container-cell__income-amount {
+.home-side-bar__body__income-container-cell:hover
+  .home-side-bar__body__income-container-cell__amount {
   color: white;
 }
 
-.home-side-bar__body__overview-container-cell__expense-title {
-  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+.home-side-bar__body__expense-container-cell {
+  width: 50%;
+  height: 125px;
+  position: relative;
+}
+
+.home-side-bar__body__expense-container-cell:hover {
+  border-radius: 20px;
+  border-color: #790121;
+  background: linear-gradient(0.375turn, #f4255c, 50%, #790121);
+  box-shadow: 0px 0px 25px 10px #790121bf;
+}
+
+.home-side-bar__body__expense-container-cell__title {
+  background-image: linear-gradient(0.375turn, #fa668e, 50%, #bb0133);
   background-clip: text;
   color: transparent;
   font-size: 18px;
@@ -122,13 +135,13 @@
   bottom: 15px;
 }
 
-.home-side-bar__body__overview-container-cell:hover
-  .home-side-bar__body__overview-container-cell__expense-title {
+.home-side-bar__body__expense-container-cell:hover
+  .home-side-bar__body__expense-container-cell__title {
   color: white;
 }
 
-.home-side-bar__body__overview-container-cell__expense-amount {
-  background-image: linear-gradient(0.25turn, #f25d70, 50%, #846df2);
+.home-side-bar__body__expense-container-cell__amount {
+  background-image: linear-gradient(0.375turn, #fa668e, 50%, #bb0133);
   background-clip: text;
   color: transparent;
   font-size: 32px;
@@ -138,8 +151,8 @@
   top: 27.5%;
 }
 
-.home-side-bar__body__overview-container-cell:hover
-  .home-side-bar__body__overview-container-cell__expense-amount {
+.home-side-bar__body__expense-container-cell:hover
+  .home-side-bar__body__expense-container-cell__amount {
   color: white;
 }
 

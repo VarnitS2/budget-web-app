@@ -8,9 +8,14 @@
   flex-direction: column;
 }
 
+.home__background::-webkit-scrollbar {
+    display: none;
+}
+
 .home__head-container-outer {
   width: 100%;
   height: 140px;
+  min-height: 140px;
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid #3d3d3f;
