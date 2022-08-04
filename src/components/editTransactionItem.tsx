@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
-import IconButton from "@mui/material/IconButton";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import "../styles/homeStyles.scss";
 import Button from "@material-ui/core/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -55,25 +53,19 @@ const styledButtons = makeStyles({
     minWidth: "1px",
   },
 
-  moreIcon: {
+  saveButton: {
     "&.MuiButton-root": {
       color: "white",
+      fontWeight: "bold",
+      border: "none",
+      transition: "0.3s",
       "&:hover": {
-        color: "gray",
-        background: "white",
+        color: "white",
+        borderColor: "#f25d70",
+        background: "linear-gradient(0.25turn, #f25d70, 90%, #c05e92)",
+        boxShadow: "0px 0px 20px 5px rgba(99, 48, 84, 0.75)",
       },
     },
-  },
-  save: {
-    textTransform: "none",
-    fontSize: "18px",
-    fontWeight: "bold",
-    color: "white",
-    borderColor: "#f25d70",
-    borderRadius: "25px",
-    background: "linear-gradient(0.25turn, #f25d70, 90%, #c05e92)",
-    boxShadow: "0px 0px 20px 5px rgba(99, 48, 84, 0.75)",
-    minWidth: "1px",
   },
 });
 
@@ -86,8 +78,6 @@ const themes = createTheme({
       styleOverrides: {
         inputRoot: {
           color: "white",
-          paddingLeft: "20px",
-          paddingRight: "20px",
         },
         clearIndicator: {
           color: "white",
@@ -163,9 +153,15 @@ function EditTransactionItem(props: {
   return (
     <li key={props.transactionItem.idx}>
       <div className="home__body__main__transactions__item-container-background">
-        <div className="home__body__main__transactions__item-container">
+        <div
+          style={{ height: "auto" }}
+          className="home__body__main__transactions__item-container"
+        >
           <div className="home__body__main__transactions__item__id-container">
-            <div className="home__body__main__transactions__item__id">
+            <div
+              style={{ alignSelf: "center", marginRight: "40px" }}
+              // className="home__body__main__transactions__item__id"
+            >
               {props.transactionItem.idx}
             </div>
 
@@ -188,63 +184,71 @@ function EditTransactionItem(props: {
           </div>
 
           <div className="home__body__main__transactions__merchant">
-            <ThemeProvider theme={themes}>
-              <Autocomplete
-                freeSolo
-                value={[merchant]}
-                options={merchants.map((option) => option.merchant)}
-                onChange={handleMerchantAutocomplete}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={
-                      <div style={{ color: "gray", fontWeight: 400 }}>
-                        Merchant
-                      </div>
-                    }
-                    fullWidth
-                    onChange={handleMerchantChange}
-                  />
-                )}
-              />
-            </ThemeProvider>
+            <div style={{ textAlignLast: "center" }}>
+              <ThemeProvider theme={themes}>
+                <Autocomplete
+                  freeSolo
+                  value={[merchant]}
+                  options={merchants.map((option) => option.merchant)}
+                  onChange={handleMerchantAutocomplete}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label={<div style={{ fontWeight: 400 }}>Merchant</div>}
+                      fullWidth
+                      onChange={handleMerchantChange}
+                    />
+                  )}
+                />
+              </ThemeProvider>
+            </div>
           </div>
 
           <div className="home__body__main__transactions__item__type-container">
-            <div className="home__body__main__transactions__amount">
+            <div style={{ marginBottom: "5px" }}>
               <ThemeProvider theme={themes}>
+                <InputLabel
+                  htmlFor="transaction-amount"
+                  style={{
+                    fontSize: "12px",
+                    marginLeft: "13px",
+                    marginBottom: "-10px",
+                  }}
+                >
+                  Amount
+                </InputLabel>
                 <OutlinedInput
-                  id="transaction-amount"
+                  id="filled-adornment-amount"
                   value={amount}
                   onChange={handleAmountChange}
                   startAdornment={
                     <InputAdornment position="start">$</InputAdornment>
                   }
                   label="Amount"
-                  fullWidth
                 />
               </ThemeProvider>
             </div>
-
-            <div
-              onClick={() =>
-                setTransactionType(
-                  transactionType === "income" ? "expense" : "income"
-                )
-              }
-            >
-              {transactionType === "income" ? (
-                <ArrowDropUpIcon className="home__body__main__transactions__item__type--income" />
-              ) : (
-                <ArrowDropDownIcon className="home__body__main__transactions__item__type--expense" />
-              )}
-            </div>
           </div>
 
-          <div className="home__body__main__transactions__more-icon-container">
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              setTransactionType(
+                transactionType === "income" ? "expense" : "income"
+              )
+            }
+          >
+            {transactionType === "income" ? (
+              <ArrowDropUpIcon className="home__body__main__transactions__item__type--income" />
+            ) : (
+              <ArrowDropDownIcon className="home__body__main__transactions__item__type--expense" />
+            )}
+          </div>
+
+          <div style={{ marginLeft: "10px" }}>
             <Button
               disableRipple
-              className={classes.moreIcon}
+              className={classes.saveButton}
               onClick={props.saveCallback}
               variant="outlined"
             >
