@@ -117,22 +117,6 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
 
         <div className="home-side-bar__body__row-container">
           <div className="home-side-bar__body__row-container-item">
-            <div className="home-side-bar__body__avg-per-day-container-cell">
-              <div className="home-side-bar__body__avg-per-day-container-cell__amount-container">
-                <div className="home-side-bar__body__avg-per-day-container-cell__amount">
-                  ${avgPerDay.toLocaleString("en", { useGrouping: true })}
-                </div>
-
-                <div className="home-side-bar__body__avg-per-day-container-cell__amount-days">
-                  / day
-                </div>
-              </div>
-
-              <div className="home-side-bar__body__avg-per-day-container-cell__title">
-                Average
-              </div>
-            </div>
-
             <div className="home-side-bar__body__max-per-day-container-cell">
               <div className="home-side-bar__body__max-per-day-container-cell__amount-container">
                 <div className="home-side-bar__body__max-per-day-container-cell__amount">
@@ -146,6 +130,22 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
 
               <div className="home-side-bar__body__max-per-day-container-cell__title">
                 Max
+              </div>
+            </div>
+
+            <div className="home-side-bar__body__avg-per-day-container-cell">
+              <div className="home-side-bar__body__avg-per-day-container-cell__amount-container">
+                <div className="home-side-bar__body__avg-per-day-container-cell__amount">
+                  ${avgPerDay.toLocaleString("en", { useGrouping: true })}
+                </div>
+
+                <div className="home-side-bar__body__avg-per-day-container-cell__amount-days">
+                  / day
+                </div>
+              </div>
+
+              <div className="home-side-bar__body__avg-per-day-container-cell__title">
+                Average
               </div>
             </div>
           </div>
