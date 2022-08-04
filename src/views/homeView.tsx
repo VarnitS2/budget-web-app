@@ -12,6 +12,7 @@ import TopBar from "../components/topBar";
 import HomeSideBar from "../components/homeSideBar";
 import "../styles/homeStyles.scss";
 import ViewTransactionItem from "../components/viewTransactionItem";
+import EditTransactionItem from "../components/editTransactionItem";
 
 const styledButtons = makeStyles({
   root: {
@@ -74,10 +75,18 @@ function HomeView() {
 
   const [selectedTransactionId, setSelectedTransactionId] =
     useState<Number | null>(null);
+  const [editTransactionId, setEditTransactionId] = useState<Number | null>(
+    null
+  );
 
   useEffect(() => {
     getAllTransactions();
-  }, [reverse]);
+  }, [reverse, editTransactionId]);
+
+  const setTransactionToEdit = (transactionID: Number | null) => {
+    setEditTransactionId(transactionID);
+    setOpen(false);
+  };
 
   const getAllTransactions = () => {
     const requestOptions = {
@@ -157,9 +166,7 @@ function HomeView() {
               <div className="home__body__main__transactions__more-popper">
                 <div
                   className="home__body__main__transactions__more-popper__option-container"
-                  onClick={() => {
-                    console.log("hello");
-                  }}
+                  onClick={() => setTransactionToEdit(selectedTransactionId)}
                 >
                   <EditIcon className="home__body__main__transactions__more-popper__option-icon" />
                   <div className="home__body__main__transactions__more-popper__option-label">
@@ -250,10 +257,19 @@ function HomeView() {
           <div className="home__body__main__transactions__list-container">
             <ul className="home__body__main__transactions__list">
               {transactions.map((item) => (
-                <ViewTransactionItem
-                  transactionItem={item}
-                  menuCallback={handleMoreOnClick}
-                />
+                <div>
+                  {item.id === editTransactionId ? (
+                    <EditTransactionItem
+                      transactionItem={item}
+                      saveCallback={() => setTransactionToEdit(null)}
+                    />
+                  ) : (
+                    <ViewTransactionItem
+                      transactionItem={item}
+                      menuCallback={handleMoreOnClick}
+                    />
+                  )}
+                </div>
               ))}
             </ul>
           </div>
