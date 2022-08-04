@@ -93,22 +93,22 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
 
         <div className="home-side-bar__body__row-container">
           <div className="home-side-bar__body__row-container-item">
-            <div className="home-side-bar__body__overview-container-cell">
-              <div className="home-side-bar__body__overview-container-cell__income-amount">
+            <div className="home-side-bar__body__income-container-cell">
+              <div className="home-side-bar__body__income-container-cell__amount">
                 ${income.toLocaleString("en", { useGrouping: true })}
               </div>
 
-              <div className="home-side-bar__body__overview-container-cell__income-title">
+              <div className="home-side-bar__body__income-container-cell__title">
                 Income
               </div>
             </div>
 
-            <div className="home-side-bar__body__overview-container-cell">
-              <div className="home-side-bar__body__overview-container-cell__expense-amount">
+            <div className="home-side-bar__body__expense-container-cell">
+              <div className="home-side-bar__body__expense-container-cell__amount">
                 ${expense.toLocaleString("en", { useGrouping: true })}
               </div>
 
-              <div className="home-side-bar__body__overview-container-cell__expense-title">
+              <div className="home-side-bar__body__expense-container-cell__title">
                 Expenses
               </div>
             </div>
