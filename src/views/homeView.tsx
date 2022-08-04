@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
-import IconButton from "@mui/material/IconButton";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Popper, { PopperPlacementType } from "@mui/material/Popper";
@@ -13,6 +11,7 @@ import Paper from "@mui/material/Paper";
 import TopBar from "../components/topBar";
 import HomeSideBar from "../components/homeSideBar";
 import "../styles/homeStyles.scss";
+import ViewTransactionItem from "../components/viewTransactionItem";
 
 const styledButtons = makeStyles({
   root: {
@@ -69,13 +68,12 @@ function HomeView() {
   const [reverse, setReverse] = useState(true);
   const [pingSideBar, setPingSideBar] = useState(false);
 
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(
-    null
-  );
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState<PopperPlacementType>();
-  
-  const [selectedTransactionId, setSelectedTransactionId] = useState<Number | null>(null);
+
+  const [selectedTransactionId, setSelectedTransactionId] =
+    useState<Number | null>(null);
 
   useEffect(() => {
     getAllTransactions();
@@ -107,29 +105,29 @@ function HomeView() {
 
   const deleteTransaction = () => {
     const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: selectedTransactionId,
-        }),
-      };
-  
-      fetch("/transactions/delete", requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === 200) {
-            getAllTransactions();
-            setPingSideBar(!pingSideBar);
-            setOpen(false);
-          } else {
-            setIsError(true);
-            console.log(data.message);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: selectedTransactionId,
+      }),
+    };
+
+    fetch("/transactions/delete", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          getAllTransactions();
+          setPingSideBar(!pingSideBar);
+          setOpen(false);
+        } else {
           setIsError(true);
-        });
+          console.log(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsError(true);
+      });
   };
 
   const addTransactionOnSaveCallback = () => {
@@ -169,7 +167,10 @@ function HomeView() {
                   </div>
                 </div>
 
-                <div className="home__body__main__transactions__more-popper__option-container" onClick={deleteTransaction}>
+                <div
+                  className="home__body__main__transactions__more-popper__option-container"
+                  onClick={deleteTransaction}
+                >
                   <DeleteIcon className="home__body__main__transactions__more-popper__option-icon" />
                   <div className="home__body__main__transactions__more-popper__option-label">
                     Delete
@@ -249,56 +250,10 @@ function HomeView() {
           <div className="home__body__main__transactions__list-container">
             <ul className="home__body__main__transactions__list">
               {transactions.map((item) => (
-                <li key={item.idx}>
-                  <div className="home__body__main__transactions__item-container-background">
-                    <div className="home__body__main__transactions__item-container">
-                      <div className="home__body__main__transactions__item__id-container">
-                        <div className="home__body__main__transactions__item__id">
-                          {item.idx}
-                        </div>
-
-                        <div className="home__body__main__transactions__item__date">
-                          {new Date(item.transaction_date)
-                            .toDateString()
-                            .split(" ")
-                            .slice(1, -1)
-                            .join(" ")}
-                        </div>
-                      </div>
-
-                      <div className="home__body__main__transactions__merchant">
-                        {item.merchant}
-                      </div>
-
-                      <div className="home__body__main__transactions__item__type-container">
-                        <div className="home__body__main__transactions__amount">
-                          $
-                          {item.amount.toLocaleString("en", {
-                            useGrouping: true,
-                          })}
-                        </div>
-
-                        <div>
-                          {item.transaction_type === "income" ? (
-                            <ArrowDropUpIcon className="home__body__main__transactions__item__type--income" />
-                          ) : (
-                            <ArrowDropDownIcon className="home__body__main__transactions__item__type--expense" />
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="home__body__main__transactions__more-icon-container">
-                        <IconButton
-                          disableRipple
-                          className={classes.moreIcon}
-                          onClick={handleMoreOnClick("top-end", item.id)}
-                        >
-                          <MoreHorizIcon />
-                        </IconButton>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                <ViewTransactionItem
+                  transactionItem={item}
+                  menuCallback={handleMoreOnClick}
+                />
               ))}
             </ul>
           </div>
