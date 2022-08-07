@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import 'react-circular-progressbar/dist/styles.css';
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import "../styles/homeSideBarStyles.scss";
 
 const styledButtons = makeStyles({
@@ -161,18 +164,20 @@ function HomeSideBar(props: {
 
         <div className="home-side-bar__body__row-container">
           <div className="home-side-bar__body__saved-container">
-            <CircularProgressbar
+            <CircularProgressbarWithChildren
               value={saved}
-              text={`${saved}%`}
               styles={buildStyles({
                 rotation: 0.75,
                 strokeLinecap: "round",
                 pathTransitionDuration: 1.5,
                 pathColor: `rgb(242, 93, 112)`,
                 textColor: "#f88",
-                trailColor: '#846df2',
+                trailColor: "#846df2",
               })}
-            />
+            >
+                <div className="home-side-bar__body__saved-amount">{`${saved}%`}</div>
+              <div className="home-side-bar__body__saved-title">Saved</div>
+            </CircularProgressbarWithChildren>
           </div>
         </div>
       </div>
