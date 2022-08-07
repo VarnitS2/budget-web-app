@@ -115,6 +115,7 @@ def get_sidebar():
 
             avg_per_day = expense / (end_date - start_date).days
             max_per_day = income / (end_date - start_date).days
+            saved = (1 - (expense / income)) * 100
 
         except db.Error as e:
             return jsonify(status=500, message='Error: ' + e)
@@ -124,7 +125,8 @@ def get_sidebar():
                 'income': round(income, 2),
                 'expense': round(expense, 2),
                 'avg_per_day': round(avg_per_day, 2),
-                'max_per_day': round(max_per_day, 2)
+                'max_per_day': round(max_per_day, 2),
+                'saved': round(saved, 2)
             })
 
     else:

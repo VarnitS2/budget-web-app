@@ -82,7 +82,7 @@ const themes = createTheme({
         notchedOutline: {
           borderColor: "gray",
           borderRadius: "25px",
-          width: "90px",
+          width: "85px",
           height: "48px",
         },
       },

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import 'react-circular-progressbar/dist/styles.css';
 import "../styles/homeSideBarStyles.scss";
 
 const styledButtons = makeStyles({
@@ -24,13 +26,18 @@ const styledButtons = makeStyles({
   },
 });
 
-function HomeSideBar(props: { dataRefresh: boolean, startDate: Date | null, endDate: Date | null }) {
+function HomeSideBar(props: {
+  dataRefresh: boolean;
+  startDate: Date | null;
+  endDate: Date | null;
+}) {
   const classes = styledButtons();
   const [balance, setBalance] = useState(0.0);
   const [income, setIncome] = useState(0.0);
   const [expense, setExpense] = useState(0.0);
   const [avgPerDay, setAvgPerDay] = useState(0.0);
   const [maxPerDay, setMaxPerDay] = useState(0.0);
+  const [saved, setSaved] = useState(0.0);
 
   useEffect(() => {
     getBalance();
@@ -55,6 +62,7 @@ function HomeSideBar(props: { dataRefresh: boolean, startDate: Date | null, endD
           setExpense(data.message.expense);
           setAvgPerDay(data.message.avg_per_day);
           setMaxPerDay(data.message.max_per_day);
+          setSaved(data.message.saved);
         } else {
           console.log(data.message);
         }
@@ -148,6 +156,23 @@ function HomeSideBar(props: { dataRefresh: boolean, startDate: Date | null, endD
                 Average
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="home-side-bar__body__row-container">
+          <div className="home-side-bar__body__saved-container">
+            <CircularProgressbar
+              value={saved}
+              text={`${saved}%`}
+              styles={buildStyles({
+                rotation: 0.75,
+                strokeLinecap: "round",
+                pathTransitionDuration: 1.5,
+                pathColor: `rgb(242, 93, 112)`,
+                textColor: "#f88",
+                trailColor: '#846df2',
+              })}
+            />
           </div>
         </div>
       </div>

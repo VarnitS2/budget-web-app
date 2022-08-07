@@ -6,6 +6,10 @@
   flex-direction: column;
 }
 
+.home-side-bar::-webkit-scrollbar {
+    display: none;
+}
+
 .home-side-bar__tab-container {
   height: 120px;
   border-bottom: 1px solid #3d3d3f;
@@ -47,7 +51,6 @@
   font-size: 28px;
   font-weight: 600;
   margin-left: 25px;
-  text-shadow: 0px 0px 30px rgba(255, 255, 255, 0.20);
 }
 
 .home-side-bar__body__container__balance-amount {
@@ -60,7 +63,7 @@
   width: 100%;
   height: 125px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;;
 }
 
 .home-side-bar__body__row-container-item {
@@ -277,4 +280,10 @@
 .home-side-bar__body__max-per-day-container-cell:hover
   .home-side-bar__body__max-per-day-container-cell__title {
   color: white;
+}
+
+.home-side-bar__body__saved-container {
+    width: 33%;
+    padding: 25px;
+    padding-top: 30px;
 }
