@@ -24,7 +24,7 @@ const styledButtons = makeStyles({
   },
 });
 
-function HomeSideBar(props: { dataRefresh: boolean }) {
+function HomeSideBar(props: { dataRefresh: boolean, startDate: Date | null, endDate: Date | null }) {
   const classes = styledButtons();
   const [balance, setBalance] = useState(0.0);
   const [income, setIncome] = useState(0.0);
@@ -41,8 +41,8 @@ function HomeSideBar(props: { dataRefresh: boolean }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        start_date: "",
-        end_date: "",
+        start_date: props.startDate === null ? "" : props.startDate,
+        end_date: props.endDate === null ? "" : props.endDate,
       }),
     };
 

@@ -20,9 +20,25 @@ def get_all():
     if request.method == 'POST':
         db = get_db()
         is_reverse = request.get_json()['reverse']
+        start_date = request.get_json()['start_date']
+        end_date = request.get_json()['end_date']
 
         try:
-            transactions = db.execute('SELECT * FROM transactions;').fetchall()
+            if start_date == "":
+                start_date = datetime.date.fromisoformat(tuple(db.execute(
+                    'SELECT MIN(transaction_date) FROM transactions;').fetchone())[0])
+            else:
+                start_date = datetime.date.fromisoformat(
+                    start_date.split('T')[0])
+
+            if end_date == "":
+                end_date = datetime.date.fromisoformat(tuple(db.execute(
+                    'SELECT MAX(transaction_date) FROM transactions;').fetchone())[0])
+            else:
+                end_date = datetime.date.fromisoformat(end_date.split('T')[0])
+
+            transactions = db.execute(
+                'SELECT * FROM transactions WHERE transaction_date BETWEEN ? AND ?;', (start_date, end_date)).fetchall()
         except db.Error as e:
             return jsonify(status=500, message='Error: ' + e)
         else:
@@ -62,7 +78,7 @@ def get_all_merchants():
 
 
 @bp.route('/getsidebar', methods=['POST'])
-def get_balance():
+def get_sidebar():
     if request.method == 'POST':
         db = get_db()
         start_date = request.get_json()['start_date']
@@ -73,13 +89,14 @@ def get_balance():
                 start_date = datetime.date.fromisoformat(tuple(db.execute(
                     'SELECT MIN(transaction_date) FROM transactions;').fetchone())[0])
             else:
-                start_date = datetime.date.fromisoformat(start_date)
+                start_date = datetime.date.fromisoformat(
+                    start_date.split('T')[0])
 
             if end_date == "":
                 end_date = datetime.date.fromisoformat(tuple(db.execute(
                     'SELECT MAX(transaction_date) FROM transactions;').fetchone())[0])
             else:
-                end_date = datetime.date.fromisoformat(end_date)
+                end_date = datetime.date.fromisoformat(end_date.split('T')[0])
 
             transactions = db.execute(
                 'SELECT * FROM transactions WHERE transaction_date BETWEEN ? AND ?;', (start_date, end_date)).fetchall()
