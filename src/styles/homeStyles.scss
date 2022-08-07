@@ -9,7 +9,7 @@
 }
 
 .home__background::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .home__head-container-outer {
@@ -36,8 +36,9 @@
 }
 
 .home__head__filter-container {
-    width: 325px;
-    display: flex;
+  width: 325px;
+  display: flex;
+  z-index: 0;
 }
 
 .home__head-icon {
