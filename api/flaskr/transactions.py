@@ -113,8 +113,8 @@ def get_sidebar():
                     balance -= transaction[TRANSACTION_AMOUNT]
                     expense += transaction[TRANSACTION_AMOUNT]
 
-            avg_per_day = expense / (end_date - start_date).days
-            max_per_day = income / (end_date - start_date).days
+            avg_per_day = expense / ((end_date - start_date).days + 1)
+            max_per_day = income / ((end_date - start_date).days + 1)
             saved = (1 - (expense / income)) * 100 if income != 0 else 0
 
         except db.Error as e:
