@@ -276,8 +276,8 @@ function HomeView() {
                     }}
                     renderInput={(startProps, endProps) => (
                       <React.Fragment>
-                        <TextField {...startProps} />
-                        <TextField {...endProps} />
+                        <TextField {...startProps} autoComplete="off" />
+                        <TextField {...endProps} autoComplete="off" />
                       </React.Fragment>
                     )}
                   />
