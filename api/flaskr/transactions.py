@@ -141,11 +141,11 @@ def get_sidebar():
                 },
                     {
                     'category': top_categories[1],
-                    'amount': top_category_amounts[2]
+                    'amount': top_category_amounts[1]
                 },
                     {
-                    'category': top_categories[3],
-                    'amount': top_category_amounts[3]
+                    'category': top_categories[2],
+                    'amount': top_category_amounts[2]
                 }]
             })
 
