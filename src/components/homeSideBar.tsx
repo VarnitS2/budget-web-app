@@ -41,6 +41,7 @@ function HomeSideBar(props: {
   const [avgPerDay, setAvgPerDay] = useState(0.0);
   const [maxPerDay, setMaxPerDay] = useState(0.0);
   const [saved, setSaved] = useState(0.0);
+  const [topExpenses, setTopExpenses] = useState<any[]>([]);
 
   useEffect(() => {
     getBalance();
@@ -66,6 +67,7 @@ function HomeSideBar(props: {
           setAvgPerDay(data.message.avg_per_day);
           setMaxPerDay(data.message.max_per_day);
           setSaved(data.message.saved);
+          setTopExpenses(data.message.top_expenses);
         } else {
           console.log(data.message);
         }
@@ -163,21 +165,38 @@ function HomeSideBar(props: {
         </div>
 
         <div className="home-side-bar__body__row-container">
-          <div className="home-side-bar__body__saved-container">
-            <CircularProgressbarWithChildren
-              value={saved}
-              styles={buildStyles({
-                rotation: 0.75,
-                strokeLinecap: "round",
-                pathTransitionDuration: 1.5,
-                pathColor: `rgb(242, 93, 112)`,
-                textColor: "#f88",
-                trailColor: "#846df2",
-              })}
-            >
+          <div className="home-side-bar__body__row-container-item">
+            <div className="home-side-bar__body__saved-container">
+              <CircularProgressbarWithChildren
+                value={saved}
+                styles={buildStyles({
+                  rotation: 0.75,
+                  strokeLinecap: "round",
+                  pathTransitionDuration: 1.5,
+                  pathColor: `rgb(242, 93, 112)`,
+                  textColor: "#f88",
+                  trailColor: "#846df2",
+                })}
+              >
                 <div className="home-side-bar__body__saved-amount">{`${saved}%`}</div>
-              <div className="home-side-bar__body__saved-title">Saved</div>
-            </CircularProgressbarWithChildren>
+                <div className="home-side-bar__body__saved-title">Saved</div>
+              </CircularProgressbarWithChildren>
+            </div>
+
+            <div className="home-side-bar__body__top-expenses-container">
+              <div className="home-side-bar__body__top-expenses-inner-container">
+                {topExpenses.map((expense) => (
+                  <div className="home-side-bar__body__top-expenses-item">
+                    <div className="home-side-bar__body__top-expenses-item-title">
+                      {expense.category}
+                    </div>
+                    <div className="home-side-bar__body__top-expenses-item-amount">
+                      ${expense.amount}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -304,3 +304,49 @@
   font-size: 18px;
   font-weight: 600;
 }
+
+.home-side-bar__body__top-expenses-container {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.home-side-bar__body__top-expenses-inner-container {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-side-bar__body__top-expenses-item {
+  background-image: linear-gradient(0turn, #fa668e, 50%, #bb0133);
+  background-clip: text;
+  color: transparent;
+  width: 100%;
+  margin-left: 20px;
+  padding: 15px 10px 15px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-side-bar__body__top-expenses-item:hover {
+  border-radius: 20px;
+  border-color: #790121;
+  background: linear-gradient(0.375turn, #f4255c, 50%, #790121);
+  box-shadow: 0px 0px 25px 10px #790121bf;
+  color: white;
+}
+
+.home-side-bar__body__top-expenses-item-title {
+  padding-left: 10px;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.home-side-bar__body__top-expenses-item-amount {
+  padding-right: 10px;
+  font-size: 18px;
+  font-weight: 500;
+}
