@@ -103,6 +103,7 @@ def get_sidebar():
             balance = 0.0
             income = 0.0
             expense = 0.0
+            category_amounts = dict()
             for transaction in transactions:
                 transaction = tuple(transaction)
 
@@ -112,10 +113,17 @@ def get_sidebar():
                 elif transaction[TRANSACTION_TYPE] == 'expense':
                     balance -= transaction[TRANSACTION_AMOUNT]
                     expense += transaction[TRANSACTION_AMOUNT]
+                    category_amounts[transaction[TRANSACTION_MERCHANT]] = round(category_amounts.get(
+                        transaction[TRANSACTION_MERCHANT], 0) + transaction[TRANSACTION_AMOUNT], 2)
 
             avg_per_day = expense / ((end_date - start_date).days + 1)
             max_per_day = income / ((end_date - start_date).days + 1)
             saved = (1 - (expense / income)) * 100 if income != 0 else 0
+
+            top_categories = [x for _, x in sorted(zip(
+                category_amounts.values(), category_amounts.keys()), key=lambda pair: -pair[0])]
+            top_category_amounts = sorted(
+                category_amounts.values(), reverse=True)
 
         except db.Error as e:
             return jsonify(status=500, message='Error: ' + e)
@@ -126,7 +134,19 @@ def get_sidebar():
                 'expense': round(expense, 2),
                 'avg_per_day': round(avg_per_day, 2),
                 'max_per_day': round(max_per_day, 2),
-                'saved': round(saved, 2)
+                'saved': round(saved, 2),
+                'top_expenses': [{
+                    'category': top_categories[0],
+                    'amount': top_category_amounts[0]
+                },
+                    {
+                    'category': top_categories[1],
+                    'amount': top_category_amounts[2]
+                },
+                    {
+                    'category': top_categories[3],
+                    'amount': top_category_amounts[3]
+                }]
             })
 
     else:
