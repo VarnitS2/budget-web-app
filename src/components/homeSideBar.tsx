@@ -221,6 +221,7 @@ function HomeSideBar(props: {
               slideSize="85%"
               height={175}
               align="center"
+              draggable={false}
               styles={{
                 control: {
                   "&[data-inactive]": {
