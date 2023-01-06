@@ -5,6 +5,18 @@ import {
   buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+
+import {
+  Group,
+  Paper,
+  Text,
+  ThemeIcon,
+  SimpleGrid,
+  MantineProvider,
+} from "@mantine/core";
+import { Carousel } from "@mantine/carousel";
+import { IconArrowUpRight, IconArrowDownRight } from "@tabler/icons";
+
 import "../styles/homeSideBarStyles.scss";
 
 const styledButtons = makeStyles({
@@ -29,6 +41,13 @@ const styledButtons = makeStyles({
   },
 });
 
+interface previousStats {
+  startDate: Date;
+  endDate: Date;
+  expense: number;
+  diff: number;
+}
+
 function HomeSideBar(props: {
   dataRefresh: boolean;
   startDate: Date | null;
@@ -42,6 +61,7 @@ function HomeSideBar(props: {
   const [maxPerDay, setMaxPerDay] = useState(0.0);
   const [saved, setSaved] = useState(0.0);
   const [topExpenses, setTopExpenses] = useState<any[]>([]);
+  const [previousStats, setPreviousStats] = useState<any[]>([]);
 
   useEffect(() => {
     getBalance();
@@ -68,6 +88,8 @@ function HomeSideBar(props: {
           setMaxPerDay(data.message.max_per_day);
           setSaved(data.message.saved);
           setTopExpenses(data.message.top_expenses);
+          setPreviousStats(data.message.previous_stats);
+          //   console.log(data.message.previous_stats);
         } else {
           console.log(data.message);
         }
@@ -199,6 +221,103 @@ function HomeSideBar(props: {
             </div>
           </div>
         </div>
+
+        <MantineProvider theme={{ colorScheme: "dark" }}>
+          <div className="home-side-bar__body__previous-expenses-container">
+            <Carousel
+              slideGap="lg"
+              slideSize="85%"
+              height={175}
+              align="center"
+              styles={{
+                control: {
+                  "&[data-inactive]": {
+                    opacity: 0,
+                    cursor: "default",
+                  },
+                },
+              }}
+            >
+              {previousStats.map((previous) => (
+                <Carousel.Slide>
+                  <Paper
+                    withBorder
+                    p="md"
+                    radius="md"
+                    className="home-side-bar__body__previous-expenses"
+                  >
+                    <Group position="apart">
+                      <div>
+                        <Text
+                          color="dimmed"
+                          transform="uppercase"
+                          weight={700}
+                          size={16}
+                        >
+                          {new Date(
+                            new Date(previous.start_date).setDate(
+                              new Date(previous.start_date).getDate() + 1
+                            )
+                          )
+                            .toDateString()
+                            .split(" ")
+                            .slice(1, -1)
+                            .join(" ")}{" "}
+                          -{" "}
+                          {new Date(
+                            new Date(previous.end_date).setDate(
+                              new Date(previous.end_date).getDate() + 1
+                            )
+                          )
+                            .toDateString()
+                            .split(" ")
+                            .slice(1, -1)
+                            .join(" ")}
+                        </Text>
+
+                        <Text weight={700} size={36}>
+                          ${previous.expense}
+                        </Text>
+                      </div>
+
+                      <ThemeIcon
+                        color="gray"
+                        variant="light"
+                        sx={(theme) => ({
+                          color:
+                            previous.diff <= 0
+                              ? theme.colors.teal[6]
+                              : theme.colors.red[6],
+                        })}
+                        size={64}
+                        radius="md"
+                      >
+                        {previous.diff <= 0 ? (
+                          <IconArrowUpRight size={48} stroke={1.5} />
+                        ) : (
+                          <IconArrowDownRight size={48} stroke={1.5} />
+                        )}
+                      </ThemeIcon>
+                    </Group>
+
+                    <Text color="dimmed" size={18} mt="md">
+                      Spent{" "}
+                      <Text
+                        component="span"
+                        color={previous.diff <= 0 ? "teal" : "red"}
+                        weight={700}
+                      >
+                        {Math.abs(previous.diff)}%
+                      </Text>{" "}
+                      {previous.diff <= 0 ? "more" : "less"} compared to current
+                      period
+                    </Text>
+                  </Paper>
+                </Carousel.Slide>
+              ))}
+            </Carousel>
+          </div>
+        </MantineProvider>
       </div>
     </div>
   );

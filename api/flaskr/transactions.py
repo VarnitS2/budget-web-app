@@ -84,10 +84,14 @@ def get_sidebar():
         start_date = request.get_json()['start_date']
         end_date = request.get_json()['end_date']
 
+        previous_start_empty_flag = False
+        previous_end_empty_flag = False
+
         try:
             if start_date == "":
                 start_date = datetime.date.fromisoformat(tuple(db.execute(
                     'SELECT MIN(transaction_date) FROM transactions;').fetchone())[0])
+                previous_start_empty_flag = True
             else:
                 start_date = datetime.date.fromisoformat(
                     start_date.split('T')[0])
@@ -95,6 +99,7 @@ def get_sidebar():
             if end_date == "":
                 end_date = datetime.date.fromisoformat(tuple(db.execute(
                     'SELECT MAX(transaction_date) FROM transactions;').fetchone())[0])
+                previous_end_empty_flag = True
             else:
                 end_date = datetime.date.fromisoformat(end_date.split('T')[0])
 
@@ -125,6 +130,43 @@ def get_sidebar():
             top_category_amounts = sorted(
                 category_amounts.values(), reverse=True)
 
+            previous_stats = []
+            loop_start = 1
+            previous_first_expense = 0.0
+
+            if previous_start_empty_flag and previous_end_empty_flag:
+                start_date = datetime.date.today().replace(day=1)   # MUTATING PROVIDED START DATE
+                end_date = datetime.date.today()                    # MUTATING PROVIDED END DATE
+                loop_start = 0
+
+            for i in range(loop_start, 7):
+                previous_start_date = start_date.replace(
+                    month=start_date.month-i) if start_date.month > i else start_date.replace(month=12-(i - start_date.month), year=start_date.year-1)
+
+                previous_end_date = end_date.replace(
+                    month=end_date.month-i) if end_date.month > i else end_date.replace(month=12-(i - end_date.month), year=end_date.year-1)
+
+                previous_transactions = db.execute(
+                    'SELECT * FROM transactions WHERE transaction_date BETWEEN ? AND ?;', (previous_start_date, previous_end_date)).fetchall()
+
+                previous_expense = 0.0
+
+                for previous_transaction in previous_transactions:
+                    previous_transaction = tuple(previous_transaction)
+
+                    if previous_transaction[TRANSACTION_TYPE] == 'expense':
+                        previous_expense += previous_transaction[TRANSACTION_AMOUNT]
+
+                if i == 0:
+                    previous_first_expense = previous_expense
+
+                previous_stats.append({
+                    'start_date': previous_start_date,
+                    'end_date': previous_end_date.isoformat(),
+                    'expense': round(previous_expense, 2),
+                    'diff': round((1 - (previous_expense / expense)) * 100, 2) if loop_start == 1 else round((1 - (previous_expense / previous_first_expense)) * 100, 2)
+                })
+
         except db.Error as e:
             return jsonify(status=500, message='Error: ' + e)
         else:
@@ -136,17 +178,10 @@ def get_sidebar():
                 'max_per_day': round(max_per_day, 2),
                 'saved': round(saved, 2),
                 'top_expenses': [{
-                    'category': top_categories[0],
-                    'amount': top_category_amounts[0]
-                },
-                    {
-                    'category': top_categories[1],
-                    'amount': top_category_amounts[1]
-                },
-                    {
-                    'category': top_categories[2],
-                    'amount': top_category_amounts[2]
-                }]
+                    'category': top_categories[idx],
+                    'amount': top_category_amounts[idx]
+                } if idx < len(top_categories) else {} for idx in range(3)],
+                'previous_stats': previous_stats
             })
 
     else:
