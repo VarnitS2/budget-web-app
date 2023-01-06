@@ -11,7 +11,6 @@ import {
   Paper,
   Text,
   ThemeIcon,
-  SimpleGrid,
   MantineProvider,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
@@ -40,13 +39,6 @@ const styledButtons = makeStyles({
     marginRight: "6px",
   },
 });
-
-interface previousStats {
-  startDate: Date;
-  endDate: Date;
-  expense: number;
-  diff: number;
-}
 
 function HomeSideBar(props: {
   dataRefresh: boolean;
