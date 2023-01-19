@@ -6,15 +6,9 @@ import {
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-import {
-  Group,
-  Paper,
-  Text,
-  ThemeIcon,
-  MantineProvider,
-} from "@mantine/core";
+import { Group, Paper, Text, ThemeIcon, MantineProvider } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
-import { IconArrowUpRight, IconArrowDownRight } from "@tabler/icons";
+import { IconArrowUpRight, IconArrowDownRight, IconMinus } from "@tabler/icons";
 
 import "../styles/homeSideBarStyles.scss";
 
@@ -57,6 +51,7 @@ function HomeSideBar(props: {
 
   useEffect(() => {
     getBalance();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataRefresh]);
 
   const getBalance = () => {
@@ -278,14 +273,18 @@ function HomeSideBar(props: {
                         variant="light"
                         sx={(theme) => ({
                           color:
-                            previous.diff <= 0
+                            previous.diff === 0
+                              ? theme.colors.gray[6]
+                              : previous.diff > 0
                               ? theme.colors.teal[6]
                               : theme.colors.red[6],
                         })}
                         size={64}
                         radius="md"
                       >
-                        {previous.diff <= 0 ? (
+                        {previous.diff === 0 ? (
+                          <IconMinus size={48} stroke={1.5} />
+                        ) : previous.diff > 0 ? (
                           <IconArrowUpRight size={48} stroke={1.5} />
                         ) : (
                           <IconArrowDownRight size={48} stroke={1.5} />
@@ -294,15 +293,15 @@ function HomeSideBar(props: {
                     </Group>
 
                     <Text color="dimmed" size={18} mt="md">
-                      Spent{" "}
+                      Spending{" "}
                       <Text
                         component="span"
-                        color={previous.diff <= 0 ? "teal" : "red"}
+                        color={previous.diff === 0 ? "dimmed" : previous.diff > 0 ? "teal" : "red"}
                         weight={700}
                       >
                         {Math.abs(previous.diff)}%
                       </Text>{" "}
-                      {previous.diff <= 0 ? "more" : "less"} compared to current
+                      {previous.diff <= 0 ? "more" : "less"} compared to this
                       period
                     </Text>
                   </Paper>

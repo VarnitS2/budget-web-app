@@ -164,7 +164,7 @@ def get_sidebar():
                     'start_date': previous_start_date,
                     'end_date': previous_end_date.isoformat(),
                     'expense': round(previous_expense, 2),
-                    'diff': round((1 - (previous_expense / expense)) * 100, 2) if loop_start == 1 else round((1 - (previous_expense / previous_first_expense)) * 100, 2)
+                    'diff': round((1 - (expense / previous_expense)) * 100, 2) if loop_start == 1 else round((1 - (previous_first_expense / previous_expense)) * 100, 2)
                 })
 
         except db.Error as e:
