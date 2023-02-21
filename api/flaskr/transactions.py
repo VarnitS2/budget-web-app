@@ -143,8 +143,16 @@ def get_sidebar():
                 previous_start_date = start_date.replace(
                     month=start_date.month-i) if start_date.month > i else start_date.replace(month=12-(i - start_date.month), year=start_date.year-1)
 
-                previous_end_date = end_date.replace(
-                    month=end_date.month-i) if end_date.month > i else end_date.replace(month=12-(i - end_date.month), year=end_date.year-1)
+                try:
+                    previous_end_date = end_date.replace(
+                        month=end_date.month-i) if end_date.month > i else end_date.replace(month=12-(i - end_date.month), year=end_date.year-1)
+                except ValueError:
+                    try:
+                        previous_end_date = end_date.replace(day=30, month=end_date.month-i) if end_date.month > i else end_date.replace(
+                            day=30, month=12-(i - end_date.month), year=end_date.year-1)
+                    except ValueError:
+                        previous_end_date = end_date.replace(day=28, month=end_date.month-i) if end_date.month > i else end_date.replace(
+                            day=28, month=12-(i - end_date.month), year=end_date.year-1)
 
                 previous_transactions = db.execute(
                     'SELECT * FROM transactions WHERE transaction_date BETWEEN ? AND ?;', (previous_start_date, previous_end_date)).fetchall()
